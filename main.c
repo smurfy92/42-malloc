@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <sys/mman.h>
 
-#define TINY_M 512-
+#define TINY_M 512
 #define SMALL_M 4096
 
 
@@ -28,20 +28,48 @@ typedef struct		s_malloc
 }					t_malloc;
 
 
-t_malloc			ms;
+t_malloc			m;
 
 
-void	*malloc(size_t size)
+void				*large_malloc(size_t size)
 {
-	static int flag = 0;
+	t_large 		*tmp;
+
+	if (!m.large_m)
+	{
+		printf("ici1\n");
+		m.large_m = (t_large*)mmap(0, size + sizeof(t_large), PROT_READ | PROT_WRITE , MAP_ANON | MAP_PRIVATE, -1 , 0);
+		m.large_m->next = NULL;
+		m.large_m->prev = NULL;
+		m.large_m->size = size;
+		return ((void *)m.large_m + sizeof(t_large));
+	}
+	else
+	{
+		printf("ici2\n");
+		tmp = m.large_m;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = (t_large*)mmap(0, size + sizeof(t_large), PROT_READ | PROT_WRITE , MAP_ANON | MAP_PRIVATE, -1 , 0);
+		tmp->next->prev = tmp;
+		tmp = tmp->next;
+		tmp->next = NULL;
+		tmp->size = size;
+		return ((void *)tmp + sizeof(t_large));
+	}
+}
+
+void				*ft_malloc(size_t size)
+{
+	static int 		flag = 0;
 
 	if (size <= 0)
 		return (NULL);
 	if (flag == 0)
 	{
-		ms.tiny_m = NULL;
-		ms.small_m = NULL;
-		ms.large_m = NULL;
+		m.tiny_m = NULL;
+		m.small_m = NULL;
+		m.large_m = NULL;
 		flag = 1;
 	}
 	if (size <= TINY_M)
@@ -53,7 +81,53 @@ void	*malloc(size_t size)
 	return (NULL);
 }
 
-int 	main(void)
+void	check_large(void *ptr)
 {
+	t_large *tmp;
+
+
+	tmp = m.large_m;
+	while (tmp)
+	{
+		if (((void *)tmp + sizeof(t_large)) == ptr)
+		{
+			if (!tmp->prev && !tmp->next)
+				m.large_m = NULL;
+			else if (!tmp->prev)
+			{
+				tmp->next->prev = NULL;
+				m.large_m = tmp->next;
+			}
+			else if (!tmp->next)
+				tmp->prev->next= NULL;
+			else
+			{
+				tmp->prev->next = tmp->next;
+				tmp->next->prev = tmp->prev;
+			}
+			munmap(tmp , tmp->size + sizeof(t_large));
+		}
+		tmp = tmp->next;
+	}
+}
+
+void				ft_free(void *ptr)
+{
+	check_large(ptr);
+}
+
+int 				main(void)
+{
+	char *str;
+	char *str2;
+	int i;
+	str = large_malloc(42);
+	i = -1;
+	while (++i < 42)
+		str[i] = 'a' + i % 26;
+	str[i] = '\0';
+	printf("%s\n", str);
+	ft_free(str);
+	printf("%s\n", str);
 	return (0);
 }
