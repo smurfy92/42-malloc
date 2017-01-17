@@ -17,7 +17,7 @@ typedef struct		s_large
 typedef struct		s_small
 {
 	int				tab[100];
-	struct s_sm		*next;
+	struct s_small	*next;
 }					t_small;
 
 typedef struct		s_malloc
@@ -30,6 +30,60 @@ typedef struct		s_malloc
 
 t_malloc			m;
 
+void				init_mem(t_small *node)
+{
+	int i;
+
+	i = -1;
+	while (++i < 100)
+		node->tab[i] = 0;
+}
+
+
+void				*find_alloc(t_small *node, size_t size, int m_range)
+{
+	int i;
+
+	i = -1;
+
+	while (++i < 100)
+	{
+		if (node->tab[i] == 0)
+		{
+			node->tab[i] = size;
+			return ((void *)node + ((i + 1) * m_range));
+		}
+	}
+	return (NULL);
+}
+
+
+void				*small_malloc(size_t size)
+{
+	t_small 		*tmp;
+	void			*ret;
+
+	if (!m.small_m)
+	{
+
+		m.small_m = (t_small*)mmap(0, SMALL_M * 101 + sizeof(t_small), PROT_READ | PROT_WRITE , MAP_ANON | MAP_PRIVATE, -1 , 0);
+		init_mem(m.small_m);
+		m.small_m->next = NULL;
+		if ((ret = find_alloc(m.small_m, size , SMALL_M)))
+			return (ret);
+	}
+	tmp = m.small_m;
+	while (tmp)
+	{
+		if ((ret = find_alloc(m.small_m, size , SMALL_M)))
+			return (ret);
+		tmp = tmp->next;
+	}
+	tmp->next = (t_small*)mmap(0, SMALL_M * 101 + sizeof(t_small), PROT_READ | PROT_WRITE , MAP_ANON | MAP_PRIVATE, -1 , 0);
+	init_mem(tmp->next);
+	return (find_alloc(tmp->next, size , SMALL_M));
+
+}
 
 void				*large_malloc(size_t size)
 {
@@ -37,7 +91,6 @@ void				*large_malloc(size_t size)
 
 	if (!m.large_m)
 	{
-		printf("ici1\n");
 		m.large_m = (t_large*)mmap(0, size + sizeof(t_large), PROT_READ | PROT_WRITE , MAP_ANON | MAP_PRIVATE, -1 , 0);
 		m.large_m->next = NULL;
 		m.large_m->prev = NULL;
@@ -46,7 +99,6 @@ void				*large_malloc(size_t size)
 	}
 	else
 	{
-		printf("ici2\n");
 		tmp = m.large_m;
 		while (tmp->next)
 			tmp = tmp->next;
@@ -125,9 +177,5 @@ int 				main(void)
 	i = -1;
 	while (++i < 42)
 		str[i] = 'a' + i % 26;
-	str[i] = '\0';
-	printf("%s\n", str);
-	ft_free(str);
-	printf("%s\n", str);
 	return (0);
 }
