@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:40:32 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/01/18 14:20:25 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/01/18 17:50:06 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void				*tiny_malloc(size_t size)
 	tmp = g_m.tiny_m;
 	while (tmp)
 	{
-		if ((ret = find_alloc(g_m.tiny_m, size, TINY_M)))
+		if ((ret = find_alloc(tmp, size, TINY_M)))
 			return (ret);
 		tmp = tmp->next;
 	}
@@ -86,7 +86,7 @@ void				*small_malloc(size_t size)
 	tmp = g_m.small_m;
 	while (tmp)
 	{
-		if ((ret = find_alloc(g_m.small_m, size, SMALL_M)))
+		if ((ret = find_alloc(tmp, size, SMALL_M)))
 			return (ret);
 		tmp = tmp->next;
 	}
