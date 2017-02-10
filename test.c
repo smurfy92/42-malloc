@@ -3,10 +3,12 @@
 int		main(void)
 {
 
+	printf("mallocs ---\n");
 	char *str = ft_malloc(42);
 	char *str2 = ft_malloc(42);
 	int i = -1;
 
+	printf("debugging ---\n");
 	while (++i < 42)
 	{
 		str[i] = (i % 26)+ 'a';

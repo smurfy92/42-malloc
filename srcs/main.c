@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:37:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/10 14:40:02 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/10 19:11:55 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,21 @@
 void				ft_print_mem()
 {
 	t_node *nodes;
-	nodes = g_m.tiny->nodes;
-	while (nodes)
+	t_block *block;
+	block = g_m.tiny;
+	int i = 0;
+	while (block)
 	{
-		printf("node -> %p , size -> %zu\n", nodes, nodes->size);
-		nodes = nodes->next;
+		printf("block %d\n", i++);
+		nodes = block->nodes;
+		while (nodes)
+		{
+			printf("node -> %p , size -> %zu\n", nodes, nodes->size);
+			nodes = nodes->next;
+		}
+		block = block->next;
 	}
+	
 }
 
 void				free(void *ptr)
@@ -35,14 +44,14 @@ void				*find_alloc(t_node *node, size_t size)
 {
 	while (node)
 	{
-		if (node->size >= (size + sizeof(node)) && node->used == 0)
+		if (node->size >= size + sizeof(node) && node->used == 0)
 		{
 			node->used = 1;
-			node->next = (t_node *)node - sizeof(node) - node->size;
-			node->next->size = node->size - sizeof(node) - size;
+			node->next = node + sizeof(node) + size + 1;
+			node->next->size = node->size + sizeof(node) + size;
 			node->next->used = 0;
 			node->size = size;
-			return (node - sizeof(node));
+			return (node + sizeof(node));
 		}
 		node = node->next;
 	}
@@ -59,7 +68,7 @@ void				*tiny_malloc(size_t size)
 	{
 		g_m.tiny = (t_block*)mmap(0, PAGE,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-		g_m.tiny->nodes = (t_node*)g_m.tiny - sizeof(g_m.tiny);
+		g_m.tiny->nodes = (t_node*)g_m.tiny + sizeof(g_m.tiny);
 		g_m.tiny->nodes->size = PAGE - sizeof(g_m.tiny);
 		g_m.tiny->nodes->used = 0;
 		g_m.tiny->nodes->next = NULL;
