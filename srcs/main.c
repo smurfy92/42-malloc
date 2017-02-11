@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:37:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/11 13:26:58 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/11 18:51:43 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void				*find_alloc(t_node *node, size_t size)
 		if (node->size >= size && node->used == 0)
 		{
 			node->used = 1;
-			node->next = (void *)node + size;
+			node->next = (void *)node + size + sizeof(node);
 			tmp = (t_node*)node->next;
-			tmp->size = node->size - size;
+			tmp->size = node->size - size - sizeof(node);
 			tmp->used = 0;
 			tmp->next = NULL;
 			node->size = size;
@@ -90,7 +90,6 @@ void				*tiny_malloc(size_t size)
 	tmp = g_m.tiny;
 	while (tmp)
 	{
-		printf("ici\n");
 		if ((ret = find_alloc(tmp->nodes, size)))
 			return (ret);
 		tmp = tmp->next;
@@ -105,7 +104,6 @@ void				*tiny_malloc(size_t size)
 	return (find_alloc(tmp->next->nodes, size));
 }
 
-
 void				*ft_malloc(size_t size)
 {
 	static int		flag = 0;
@@ -119,7 +117,8 @@ void				*ft_malloc(size_t size)
 		g_m.large = NULL;
 		flag = 1;
 	}
-	size = (((size + sizeof(t_node)) / 16) + 1) * 16;
+	size = (((size) / 16) + 1) * 16;
+	printf("size -> %zu\n",size);
 	pthread_mutex_lock(&mutex);
 	if (size <= TINY)
 		return (tiny_malloc(size));
