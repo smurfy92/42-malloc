@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/10 19:10:36 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/11 11:19:43 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/mman.h>
+# include <pthread.h>
 
 typedef struct		s_large
 {

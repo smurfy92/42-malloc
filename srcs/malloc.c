@@ -6,16 +6,11 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:40:32 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/10 13:41:07 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/11 13:17:33 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-
-
-
-
-
 
 void				*small_malloc(size_t size)
 {

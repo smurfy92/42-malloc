@@ -4,8 +4,11 @@ int		main(void)
 {
 
 	printf("mallocs ---\n");
+	int total = 0;
 	char *str = ft_malloc(42);
+	total += 42;
 	char *str2 = ft_malloc(42);
+	total += 42;
 	int i = -1;
 
 	printf("debugging ---\n");
@@ -17,7 +20,25 @@ int		main(void)
 	str[i] = '\0';
 	str2[i] = '\0';
 	printf("str -> %s\n", str);
-	printf("str -> %s\n", str2);
+	printf("str2 -> %s\n", str2);
 	ft_print_mem();
+
+	// int	y = 0;
+	// char *str3;
+	// //ft_print_mem();
+	// printf("lots of malloc\n");
+	// while ((++y * 42) < 3200)
+	// {
+	// 	str3 = ft_malloc(42);
+	// 	total += 42;
+	// 	//ft_print_mem();
+	// 	i = -1;
+	// 	while (++i < 42)
+	// 		str3[i] = (i * y  % 26)+ 'a';
+	// 	str3[i] = '\0';
+	// 	printf("str3 -> %s total -> %d\n", str3, total + (total /42) * 8);
+	// }
+	// printf("end\n");
+	// ft_print_mem();
 	return (0);
 }
