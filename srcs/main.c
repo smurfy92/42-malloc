@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:37:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/12 16:15:39 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/12 19:03:46 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,18 @@ void				free(void *ptr)
 
 void				*find_alloc(t_node *node, size_t size)
 {
-	t_node *tmp;
 	while (node)
 	{
-		if (node->size >= size + sizeof(node) && node->used == 0)
+		if (node->size >= size + sizeof(t_node*) && node->used == 0)
 		{
 			node->used = 1;
-			node->next = (void *)node + size + sizeof(node);
-			tmp = (t_node*)node->next;
-			tmp->size = node->size - size - sizeof(node);
-			tmp->used = 0;
-			tmp->next = NULL;
+			node->next = (void*)node + size + sizeof(t_node*);
+			node->next->size = node->size - size - sizeof(t_node*);
+			node->next->used = 0;
+			node->next->next = NULL;
 			node->size = size;
 			pthread_mutex_unlock(&mutex);
-			return (node + sizeof(node));
+			return (node + sizeof(t_node*));
 		}
 		node = node->next;
 	}
@@ -70,28 +68,30 @@ void				*tiny_malloc(size_t size)
 	tmp = NULL;
 	if (!g_m.tiny)
 	{
-		g_m.tiny = (void*)mmap(0, PAGE,
+		g_m.tiny = mmap(0, PAGE,
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-		printf("block address -> %p blocksize -> %lu\n", tmp, sizeof(t_block));
+		printf("block address -> %p blocksize -> %lu\n", g_m.tiny, sizeof(t_block*));
 		g_m.tiny->next = NULL;
-		g_m.tiny->nodes = (void*)g_m.tiny + sizeof(t_block);
-		printf("node address -> %p nodesize -> %lu\n" , g_m.tiny->nodes, sizeof(g_m.tiny->nodes));
-		g_m.tiny->nodes->size = PAGE - sizeof(t_block) - sizeof(t_node);
+		g_m.tiny->nodes = (void*)g_m.tiny + sizeof(t_block*);
+		printf("node address -> %p nodesize -> %lu\n" , g_m.tiny->nodes, sizeof(t_node*));
+		g_m.tiny->nodes->size = PAGE - sizeof(t_block*) - sizeof(t_node*) - 400;
 		g_m.tiny->nodes->used = 0;
 		g_m.tiny->nodes->next = NULL;
 		return (find_alloc(g_m.tiny->nodes, size));
 	}
 	tmp = g_m.tiny;
-	while (tmp)
+	while (tmp != NULL)
 	{
+		printf("tmp\n");
 		if ((ret = find_alloc(tmp->nodes, size)))
 			return (ret);
+		printf("la\n");
 		tmp = tmp->next;
 	}
-	printf("icilalala\n");
+	printf("la2\n");
 	tmp->next = (void*)mmap(0, PAGE, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-
-	tmp->next->nodes->size = PAGE - sizeof(t_node);
+	tmp->next->nodes = (void*)tmp->next + sizeof(t_block*);
+	tmp->next->nodes->size = PAGE - sizeof(t_block*) - sizeof(t_node*) - 400;
 	tmp->next->nodes->used = 0;
 	tmp->next->nodes->next = NULL;
 	tmp->next->next = NULL;
