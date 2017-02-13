@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/13 14:52:03 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/13 19:31:47 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_node
 {
 	size_t			size;
 	int				used;
+	void			*ptr;
 	struct s_node	*next;
 }					t_node;
 
