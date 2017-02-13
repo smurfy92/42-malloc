@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/13 19:31:47 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/13 22:10:28 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ typedef struct		s_node
 
 typedef struct		s_block
 {
-	struct s_node	*nodes;
-	int				last;
 	struct s_block	*next;
+	int				last;
+	struct s_node	*nodes;
 }					t_block;
 
 typedef struct		s_malloc
