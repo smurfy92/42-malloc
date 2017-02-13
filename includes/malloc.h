@@ -6,14 +6,14 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/11 11:19:43 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/13 12:23:12 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 # define TINY 512
-# define PAGE 4096
+# define PAGE getpagesize()
 
 # include <unistd.h>
 # include <stdio.h>
@@ -38,6 +38,7 @@ typedef struct		s_node
 typedef struct		s_block
 {
 	struct s_node	*nodes;
+	int				last;
 	struct s_block	*next;
 }					t_block;
 

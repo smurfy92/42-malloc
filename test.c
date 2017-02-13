@@ -21,13 +21,13 @@ int		main(void)
 	str2[i] = '\0';
 	printf("str -> %s\n", str);
 	printf("str2 -> %s\n", str2);
-	//ft_print_mem();
+	ft_print_mem();
 
 	int	y = 0;
 	char *str3;
 	//ft_print_mem();
 	printf("\n\n--- lots of malloc ---\n\n");
-	while ((++y * 42) < 4000)
+	while ((++y * 42) < 5000)
 	{
 		str3 = ft_malloc(42);
 		total += 42;
@@ -40,6 +40,6 @@ int		main(void)
 		printf("str3 -> %s total -> %d\n", str3, total);
 	}
 	printf("end\n");
-	// ft_print_mem();
+	ft_print_mem();
 	return (0);
 }
