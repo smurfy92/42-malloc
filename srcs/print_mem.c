@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 14:54:39 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/13 22:22:20 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/14 12:48:11 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ void				ft_print_tiny()
 
 	int i = 0;
 	int total;
+	total = 0;
 	while (block)
 	{
 		total = 0;
 		printf("\n\n\n\nTINY [%d]: -> %p \n", i++, block);
 		nodes = block->nodes;
-		total += sizeof(t_block);
+		total += sizeof(t_block) - 1;
 		while (nodes)
 		{
 			printf("%p - %p : %zu octets", nodes->ptr, nodes->ptr + nodes->size, nodes->size);
 			printf(" used -> %d\n", nodes->used);
-			total += nodes->size;
+			total += nodes->size + 1;
 			total += sizeof(t_node);
 			nodes = nodes->next;
 		}
@@ -41,29 +42,35 @@ void				ft_print_tiny()
 	}
 }
 
-// void				ft_print_small()
-// {
-// 	t_node *nodes;
-// 	t_block *block;
-// 	block = g_m.small;
+void				ft_print_small()
+{
+	t_node *nodes;
+	t_block *block;
+	block = g_m.small;
 
-// 	int i = 0;
-// 	while (block)
-// 	{
-// 		printf("\n\n\n\nSMALL [%d]: -> %p \n", i++, block);
-// 		nodes = NULL;
-// 		nodes = block->nodes;
-// 		while (nodes)
-// 		{
-// 			printf("%p - %p : %zu octets", (void*)nodes + sizeof(t_node*), (void*)nodes + sizeof(t_node*) + nodes->size, nodes->size);
-// 			printf(" used -> %d\n", nodes->used);
-// 			nodes = nodes->next;
-// 		}
-// 		if (block->last)
-// 			break;
-// 		block = block->next;
-// 	}
-// }
+	int i = 0;
+	int total;
+	total = 0;
+	while (block)
+	{
+		total = 0;
+		printf("\n\n\n\nSMALL [%d]: -> %p \n", i++, block);
+		nodes = block->nodes;
+		total += sizeof(t_block) - 1;
+		while (nodes)
+		{
+			printf("%p - %p : %zu octets", nodes->ptr, nodes->ptr + nodes->size, nodes->size);
+			printf(" used -> %d\n", nodes->used);
+			total += nodes->size + 1;
+			total += sizeof(t_node);
+			nodes = nodes->next;
+		}
+		printf("total -> %d\n",total);
+		if (block->last)
+			break;
+		block = block->next;
+	}
+}
 
 void				ft_print_big()
 {
@@ -84,6 +91,6 @@ void				ft_print_big()
 void				ft_print_mem()
 {
 		ft_print_tiny();
-		//ft_print_small();
+		ft_print_small();
 		//ft_print_big();
 }

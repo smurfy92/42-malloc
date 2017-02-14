@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/13 22:10:28 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/14 12:53:46 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,25 +54,12 @@ t_malloc			g_m;
 
 void				ft_print_mem();
 
-void				*ft_memcpy(void *s1, const void *s2, size_t n);
 void				free(void *ptr);
 
 void				*find_alloc(t_node *node, size_t size);
-int					search_alloc(void *ptr, t_node *node, size_t m_range);
-int					is_tiny(void *ptr);
-int					is_small(void *ptr);
-void				is_large(void *ptr);
-
-void				init_mem(t_node *node);
 void				*ft_malloc(size_t size);
 void				*tiny_malloc(size_t size);
 void				*small_malloc(size_t size);
 void				*large_malloc(size_t size);
-
-void				*realloc_sm(t_node *node, void *ptr, size_t size,
-	size_t m_range);
-void				*realloc_large(void *ptr, size_t size);
-void				*search_realloc(void *ptr, size_t size);
-void				*realloc(void *ptr, size_t size);
 
 #endif
