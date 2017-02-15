@@ -6,13 +6,13 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 12:59:10 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 14:34:34 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
-# define TINY 512
+# define TINY 1024
 # define PAGE getpagesize()
 
 # include <unistd.h>

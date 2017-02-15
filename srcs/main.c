@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:37:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 14:21:29 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 14:45:07 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,22 @@ void				*find_alloc(t_node *node, size_t size)
 			node->size = size + sizeof(t_node);
 			return (node->ptr);
 		}
+		if (node->size < size + sizeof(t_node))
+			break ;
 		node = node->next;
 	}
 	return (NULL);
 }
 
-t_block 			*ft_create_block()
+t_block 			*ft_create_block(size_t type)
 {
 	t_block *tmp;
 
 
-	tmp = (t_block *)mmap(0, PAGE, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+	tmp = (t_block *)mmap(0, type * 100, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 	tmp->last = 1;
 	tmp->nodes = (void*)tmp + sizeof(t_block);
-	tmp->nodes->size = PAGE - sizeof(t_block) - sizeof(t_node);
+	tmp->nodes->size = (type * 100) - sizeof(t_block) - sizeof(t_node);
 	tmp->nodes->used = 0;
 	tmp->nodes->ptr = NULL;
 	tmp->nodes->next = NULL;
@@ -94,7 +96,7 @@ void				*tiny_malloc(size_t size)
 	tmp = NULL;
 	if (!g_m.tiny)
 	{
-		g_m.tiny = ft_create_block();
+		g_m.tiny = ft_create_block(TINY);
 		return (find_alloc(g_m.tiny->nodes, size));
 	}
 	tmp = g_m.tiny;
@@ -106,7 +108,7 @@ void				*tiny_malloc(size_t size)
 			break;
 		tmp = tmp->next;
 	}
-	tmp->next = ft_create_block();
+	tmp->next = ft_create_block(TINY);
 	tmp->last = 0;
 	return (find_alloc(tmp->next->nodes, size));
 }
@@ -120,7 +122,7 @@ void				*small_malloc(size_t size)
 	tmp = NULL;
 	if (!g_m.small)
 	{
-		g_m.small = ft_create_block();
+		g_m.small = ft_create_block(PAGE);
 		return (find_alloc(g_m.small->nodes, size));
 	}
 	tmp = g_m.small;
@@ -132,7 +134,7 @@ void				*small_malloc(size_t size)
 			break;
 		tmp = tmp->next;
 	}
-	tmp->next = ft_create_block();
+	tmp->next = ft_create_block(PAGE);
 	tmp->last = 0;
 	return (find_alloc(tmp->next->nodes, size));
 }
