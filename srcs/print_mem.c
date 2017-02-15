@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 14:54:39 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 13:00:16 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 14:25:13 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,12 @@ void				ft_print_tiny()
 		total = 0;
 		printf("\n\n\n\nTINY [%d]: -> %p \n", i++, block);
 		nodes = block->nodes;
-		total += sizeof(t_block) - 1;
+		total += sizeof(t_block);
 		while (nodes)
 		{
 			printf("%p - %p : %zu octets", nodes->ptr, nodes->ptr + nodes->size, nodes->size);
 			printf(" used -> %d\n", nodes->used);
-			total += nodes->size + 1;
-			total += sizeof(t_node);
+			total += nodes->size;
 			nodes = nodes->next;
 		}
 		printf("total -> %d\n",total);

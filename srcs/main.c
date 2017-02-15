@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:37:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 13:00:17 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 14:21:29 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ void				*find_alloc(t_node *node, size_t size)
 		{
 			node->used = 1;
 			node->ptr = node + 1;
-			node->next = node->ptr + 1 + size;
+			node->next = node->ptr + size + 1;
 			node->next->size = node->size - sizeof(t_node) - size - 1;
 			node->next->used = 0;
 			node->next->next = NULL;
-			node->size = size;
+			node->size = size + sizeof(t_node);
 			return (node->ptr);
 		}
 		node = node->next;
@@ -75,13 +75,13 @@ t_block 			*ft_create_block()
 
 
 	tmp = (t_block *)mmap(0, PAGE, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
-	tmp->next = NULL;
 	tmp->last = 1;
 	tmp->nodes = (void*)tmp + sizeof(t_block);
 	tmp->nodes->size = PAGE - sizeof(t_block) - sizeof(t_node);
 	tmp->nodes->used = 0;
 	tmp->nodes->ptr = NULL;
 	tmp->nodes->next = NULL;
+	tmp->next = NULL;
 	return (tmp);
 }
 
