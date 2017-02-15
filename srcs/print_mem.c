@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 14:54:39 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 14:40:40 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:00:23 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void				ft_print_small()
 
 void				ft_print_big()
 {
-	t_node *nodes;
 	t_large *block;
 	block = g_m.large;
 
@@ -90,7 +89,7 @@ void				ft_print_big()
 
 void				ft_print_mem()
 {
-		//ft_print_tiny();
-		//ft_print_small();
+		ft_print_tiny();
+		ft_print_small();
 		//ft_print_big();
 }

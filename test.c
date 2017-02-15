@@ -5,14 +5,17 @@ int		main(void)
 
 	printf("\n\n--- mallocs ---\n\n");
 	int total = 0;
-	char *str = ft_malloc(42);
+	char *str = malloc(42);
 	total += 42;
-	char *str2 = ft_malloc(42);
+	free(str);
+	char *str2 = malloc(42);
 	total += 42;
+	ft_print_mem();
+	return (0);
 
-	char *str5 = ft_malloc(556);
+	char *str5 = malloc(556);
 	total += 556;
-	char *str6 = ft_malloc(5000);
+	char *str6 = malloc(5000);
 	total += 5000;
 	int i = -1;
 
@@ -36,7 +39,7 @@ int		main(void)
 	printf("\n\n--- lots of malloc ---\n\n");
 	while ((++y * 42) < 16000)
 	{
-		str3 = ft_malloc(42);
+		str3 = malloc(42);
 		total += 42;
 		ft_print_mem();
 		printf("total -> %d\n", total);

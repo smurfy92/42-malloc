@@ -6,13 +6,13 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 14:34:34 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:01:33 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
-# define TINY 1024
+# define TINY getpagesize() / 4
 # define PAGE getpagesize()
 
 # include <unistd.h>
@@ -32,6 +32,7 @@ typedef struct		s_node
 {
 	size_t			size;
 	int				used;
+	int				last;
 	void			*ptr;
 	struct s_node	*next;
 }					t_node;
@@ -56,8 +57,9 @@ void				ft_print_mem();
 
 void				free(void *ptr);
 
-void				*find_alloc(t_node *node, size_t size);
-void				*ft_malloc(size_t size);
+void				*malloc(size_t size);
+
+
 void				*tiny_malloc(size_t size);
 void				*small_malloc(size_t size);
 void				*large_malloc(size_t size);
