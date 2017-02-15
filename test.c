@@ -7,8 +7,12 @@ int		main(void)
 	int total = 0;
 	char *str = malloc(42);
 	total += 42;
+	char *str2 = malloc(42);
+
+	free(str2);
+	char *str2 = malloc(1024);
+	total += 42;
 	show_alloc_mem();
-	return (0);
 
 	char *str5 = malloc(556);
 	total += 556;

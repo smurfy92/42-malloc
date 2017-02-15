@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 17:45:49 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:59:16 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ typedef struct		s_malloc
 t_malloc			g_m;
 
 void				show_alloc_mem();
-
 void				free(void *ptr);
-
 void				*malloc(size_t size);
-
-
 void				*tiny_malloc(size_t size);
 void				*small_malloc(size_t size);
 void				*large_malloc(size_t size);
