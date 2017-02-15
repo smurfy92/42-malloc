@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 17:01:33 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:45:49 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <sys/mman.h>
 # include <pthread.h>
+# include <string.h>
 
 typedef struct		s_large
 {
@@ -53,7 +54,7 @@ typedef struct		s_malloc
 
 t_malloc			g_m;
 
-void				ft_print_mem();
+void				show_alloc_mem();
 
 void				free(void *ptr);
 

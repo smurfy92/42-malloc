@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 14:54:39 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 17:00:23 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/15 17:49:03 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,20 @@ void				ft_print_tiny()
 	while (block)
 	{
 		total = 0;
-		printf("\n\n\n\nTINY [%d]: -> %p \n", i++, block);
+		printf("\nTINY [%d]: -> %p \n", i++, block);
 		nodes = block->nodes;
 		total += sizeof(t_block);
 		while (nodes)
 		{
-			printf("%p - %p : %zu octets", nodes->ptr, nodes->ptr + nodes->size - sizeof(t_node), nodes->size - sizeof(t_node));
-			printf(" used -> %d\n", nodes->used);
+			if (nodes->used)
+			{
+				printf("%p - %p : %zu octets\n", nodes->ptr, nodes->ptr + nodes->size - sizeof(t_node), nodes->size - sizeof(t_node));
+		//		printf(" used -> %d\n", nodes->used);
+			}
 			total += nodes->size;
 			nodes = nodes->next;
 		}
-		printf("total -> %d\n",total);
+		//printf("total -> %d\n",total);
 		if (block->last)
 			break;
 		block = block->next;
@@ -53,7 +56,7 @@ void				ft_print_small()
 	while (block)
 	{
 		total = 0;
-		printf("\n\n\n\nSMALL [%d]: -> %p \n", i++, block);
+		printf("\nSMALL [%d]: -> %p \n", i++, block);
 		nodes = block->nodes;
 		total += sizeof(t_block) - 1;
 		while (nodes)
@@ -80,16 +83,16 @@ void				ft_print_big()
 	int i = 0;
 	while (block)
 	{
-		printf("\n\n\n\nLARGE [%d]: -> %p \n", i++, block);
+		printf("\nLARGE [%d]: -> %p \n", i++, block);
 		printf("%p - %p : %zu octets\n", (void*)block + sizeof(t_block*), (void*)block + sizeof(t_node*) + block->size, block->size);
 		block = block->next;
 	}
 }
 
 
-void				ft_print_mem()
+void				show_alloc_mem()
 {
 		ft_print_tiny();
 		ft_print_small();
-		//ft_print_big();
+		ft_print_big();
 }

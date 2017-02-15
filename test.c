@@ -7,10 +7,7 @@ int		main(void)
 	int total = 0;
 	char *str = malloc(42);
 	total += 42;
-	free(str);
-	char *str2 = malloc(42);
-	total += 42;
-	ft_print_mem();
+	show_alloc_mem();
 	return (0);
 
 	char *str5 = malloc(556);
@@ -41,7 +38,7 @@ int		main(void)
 	{
 		str3 = malloc(42);
 		total += 42;
-		ft_print_mem();
+		show_alloc_mem();
 		printf("total -> %d\n", total);
 		i = -1;
 		while (++i < 42)
