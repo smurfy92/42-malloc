@@ -1,3 +1,5 @@
+#include "../includes/malloc.h"
+
 int	main()
 {
 	int i;
