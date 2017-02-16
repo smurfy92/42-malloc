@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 17:52:51 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 17:54:37 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/16 17:25:31 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static	int			free_large(void *ptr)
 
 void				free(void *ptr)
 {
+	if (ptr == NULL)
+		return;
 	if (free_tiny(ptr))
 		return ;
 	if (free_small(ptr))

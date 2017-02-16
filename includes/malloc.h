@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/15 17:59:16 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/16 17:02:35 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ t_malloc			g_m;
 void				show_alloc_mem();
 void				free(void *ptr);
 void				*malloc(size_t size);
+void 				*realloc(void *ptr, size_t size);
 void				*tiny_malloc(size_t size);
 void				*small_malloc(size_t size);
 void				*large_malloc(size_t size);

@@ -2,6 +2,7 @@ NAME = malloc.so
 
 SRC =  srcs/main.c
 SRC += srcs/malloc.c
+SRC += srcs/free.c
 SRC += srcs/print_mem.c
 
 

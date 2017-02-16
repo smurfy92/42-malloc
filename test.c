@@ -10,8 +10,10 @@ int		main(void)
 	char *str2 = malloc(42);
 
 	free(str2);
-	char *str2 = malloc(1024);
+	str2 = malloc(1024);
+	realloc(str2, 5);
 	total += 42;
+	return (0);
 	show_alloc_mem();
 
 	char *str5 = malloc(556);
