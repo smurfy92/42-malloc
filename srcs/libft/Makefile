@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+         #
+#    By: julio <julio@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/28 18:42:36 by jtranchi          #+#    #+#              #
-#    Updated: 2017/02/17 18:28:12 by jtranchi         ###   ########.fr        #
+#    Updated: 2016/11/08 16:55:23 by julio            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ SRC= ft_memset.c\
 	 ft_memcmp.c\
 	 ft_strlen.c\
 	 ft_strdup.c\
+	 ft_strcpy.c\
+	 ft_strncpy.c\
 	 ft_strcat.c\
 	 ft_strncat.c\
 	 ft_strlcat.c\
@@ -54,6 +56,8 @@ SRC= ft_memset.c\
 	 ft_strequ.c\
 	 ft_strnequ.c\
 	 ft_strsub.c\
+	 ft_strjoin.c\
+	 ft_strtrim.c\
 	 ft_spacesplit.c\
 	 ft_strsplit.c\
 	 ft_quotes.c\

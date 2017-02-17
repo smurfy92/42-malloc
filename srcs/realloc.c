@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 17:13:46 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 18:41:32 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 19:38:28 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void				*check_large(void *ptr, size_t size)
 			return (large);
 		else
 		{
-			large2 = ft_strcpy(malloc(size),
+			large2 = ft_mystrcpy(malloc(size),
 			(char *)large + sizeof(t_large), large->size, size);
 			free(large);
 			return (large2);
@@ -103,7 +103,7 @@ void				*realloc(void *ptr, size_t size)
 			return (ret);
 		else
 		{
-			ret2 = ft_strcpy(malloc(size),
+			ret2 = ft_mystrcpy(malloc(size),
 			ret->ptr, ret->size - sizeof(t_node), size);
 			free(ret);
 			return (ret2);

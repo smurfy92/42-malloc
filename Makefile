@@ -6,6 +6,7 @@ SRC += srcs/malloc_lib.c
 SRC += srcs/realloc.c
 SRC += srcs/free.c
 SRC += srcs/print_mem.c
+SRC += srcs/print_lib.c
 
 
 INC = -I ./includes/

@@ -10,15 +10,16 @@ int		main(void)
 	char *str2 = malloc(42);
 
 	str2 = malloc(1024);
-	realloc(str2, 5);
 	total += 42;
+	char *str6 = malloc(2038);
+	char *str11 = malloc(5000);
+	total += 5000;
 	show_alloc_mem();
 	return (0);
 
 	char *str5 = malloc(556);
 	total += 556;
-	char *str6 = malloc(5000);
-	total += 5000;
+	
 	int i = -1;
 
 	printf("\n\n--- debugging ---\n\n");

@@ -6,13 +6,14 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/15 17:52:51 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 14:54:53 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 19:38:11 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-void				*ft_strcpy(char *dst, const char *src, int size, int size2)
+void				*ft_mystrcpy(char *dst, const char *src, int size,
+int size2)
 {
 	int i;
 
