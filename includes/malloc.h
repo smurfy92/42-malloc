@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/16 17:02:35 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 18:05:56 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/mman.h>
 # include <pthread.h>
 # include <string.h>
+# include "../srcs/libft/includes/libft.h"
 
 typedef struct		s_large
 {
@@ -53,13 +54,14 @@ typedef struct		s_malloc
 }					t_malloc;
 
 t_malloc			g_m;
+pthread_mutex_t lock;
 
-void				show_alloc_mem();
 void				free(void *ptr);
 void				*malloc(size_t size);
 void 				*realloc(void *ptr, size_t size);
-void				*tiny_malloc(size_t size);
-void				*small_malloc(size_t size);
-void				*large_malloc(size_t size);
+void				*find_alloc(t_node *node, size_t size);
+void				show_alloc_mem();
+void				*ft_strcpy(char *dst, const char *src, int size, int size2);
+
 
 #endif

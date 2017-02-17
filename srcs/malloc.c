@@ -6,38 +6,11 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:40:32 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 13:20:47 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 17:42:14 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
-
-static	void		*find_alloc(t_node *node, size_t size)
-{
-	while (node)
-	{
-		if (node->size >= size + sizeof(t_node) && node->used == 0)
-		{
-			node->used = 1;
-			if (node->last)
-			{
-				node->ptr = node + 1;
-				node->next = node->ptr + size + 1;
-				node->next->size = node->size - sizeof(t_node) - size - 1;
-				node->next->used = 0;
-				node->last = 0;
-				node->next->last = 1;
-				node->next->next = NULL;
-				node->size = size + sizeof(t_node);
-			}
-			return (node->ptr);
-		}
-		if (node->size < size + sizeof(t_node))
-			break ;
-		node = node->next;
-	}
-	return (NULL);
-}
 
 static	t_block		*ft_create_block(size_t type)
 {
@@ -56,7 +29,7 @@ static	t_block		*ft_create_block(size_t type)
 	return (tmp);
 }
 
-void				*large_malloc(size_t size)
+static	void		*large_malloc(size_t size)
 {
 	t_large			*tmp;
 
@@ -67,6 +40,7 @@ void				*large_malloc(size_t size)
 		g_m.large->next = NULL;
 		g_m.large->prev = NULL;
 		g_m.large->size = size;
+		pthread_mutex_unlock(&lock);
 		return (g_m.large + 1);
 	}
 	else
@@ -77,14 +51,14 @@ void				*large_malloc(size_t size)
 		tmp->next = mmap(0, size + sizeof(t_large),
 		PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 		tmp->next->prev = tmp;
-		tmp = tmp->next;
-		tmp->next = NULL;
-		tmp->size = size;
-		return (tmp + 1);
+		tmp->next->next = NULL;
+		tmp->next->size = size;
+		pthread_mutex_unlock(&lock);
+		return (tmp->next + 1);
 	}
 }
 
-void				*tiny_malloc(size_t size)
+static	void		*tiny_malloc(size_t size)
 {
 	t_block			*tmp;
 	void			*ret;
@@ -109,7 +83,7 @@ void				*tiny_malloc(size_t size)
 	return (find_alloc(tmp->next->nodes, size));
 }
 
-void				*small_malloc(size_t size)
+static	void		*small_malloc(size_t size)
 {
 	t_block			*tmp;
 	void			*ret;
@@ -132,4 +106,31 @@ void				*small_malloc(size_t size)
 	tmp->next = ft_create_block(PAGE);
 	tmp->last = 0;
 	return (find_alloc(tmp->next->nodes, size));
+}
+
+void				*malloc(size_t size)
+{
+	static int		flag = 0;
+
+	if (size <= 0)
+		return (NULL);
+	if (flag == 0)
+	{
+		if (pthread_mutex_init(&lock, NULL) != 0)
+		{
+			write(2, "mutex init failed\n", sizeof("mutex init failed\n"));
+			return (NULL);
+		}
+		g_m.tiny = NULL;
+		g_m.small = NULL;
+		g_m.large = NULL;
+		flag = 1;
+	}
+	pthread_mutex_lock(&lock);
+	if (size <= (size_t)TINY)
+		return (tiny_malloc(size));
+	else if (size <= (size_t)PAGE)
+		return (small_malloc(size));
+	else
+		return (large_malloc(size));
 }

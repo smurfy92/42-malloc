@@ -1,16 +1,21 @@
-NAME = malloc.so
 
-SRC =  srcs/main.c
-SRC += srcs/malloc.c
+LIB = srcs/libft/libft.a
+
+SRC = srcs/malloc.c
+SRC += srcs/malloc_lib.c
+SRC += srcs/realloc.c
 SRC += srcs/free.c
 SRC += srcs/print_mem.c
 
 
 INC = -I ./includes/
+ifeq ($(HOSTTYPE),)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
 
+NAME = malloc.so
 OBJ = $(SRC:.c=.o)
 FLAG = -Wall -Werror -Wextra
-#-fsanitize=address
 CG = \033[92m
 CY =  \033[93m
 CE = \033[0m
@@ -20,7 +25,9 @@ all: start $(NAME)
 
 $(NAME): $(OBJ)
 	@echo "\033[K$(CY)[MALLOC] :$(CE) $(CG)Compiling Malloc ...$(CE)";
-	@gcc -shared -o $(NAME) $(FLAG) $(INC) $(SRC) $(LIB)
+	-@make -C srcs/libft nohd
+	@gcc -shared -o $(NAME)_$(HOSTTYPE) $(FLAG) $(INC) $(SRC) $(LIB);
+	@ln -sf $(NAME)_$(HOSTTYPE) "libft_malloc.so"
 
 %.o: %.c
 	@echo "\033[K$(CY)[MALLOC] :$(CE) $(CG)Compiling $<$(CE) \033[1A";
@@ -39,11 +46,13 @@ start:
 
 clean: start
 	@echo "\033[K$(CY)[MALLOC] :$(CE) $(CG)Cleaning Malloc objects$(CE)\033[1A";
-	@/bin/rm -rf $(OBJ)
+	@/bin/rm -rf $(OBJ);
+	-@make -C srcs/libft nohdclean;
 
 fclean: start clean
 	@echo "\033[K$(CY)[MALLOC] :$(CE) $(CG)Cleaning 42sh ...$(CE)\033[1A";
-	@/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)_$(HOSTTYPE) "libft_malloc.so";
+	-@make -C srcs/libft nohdfclean;
 
 re: fclean all
 
