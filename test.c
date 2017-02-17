@@ -13,7 +13,6 @@ int		main(void)
 	str2 = malloc(1024);
 	realloc(str2, 5);
 	total += 42;
-	return (0);
 	show_alloc_mem();
 
 	char *str5 = malloc(556);

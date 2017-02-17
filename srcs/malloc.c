@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:40:32 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/16 16:59:07 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 13:20:47 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void				*large_malloc(size_t size)
 		g_m.large->next = NULL;
 		g_m.large->prev = NULL;
 		g_m.large->size = size;
-		return ((void *)g_m.large + sizeof(t_large));
+		return (g_m.large + 1);
 	}
 	else
 	{
@@ -80,7 +80,7 @@ void				*large_malloc(size_t size)
 		tmp = tmp->next;
 		tmp->next = NULL;
 		tmp->size = size;
-		return ((void *)tmp + sizeof(t_large));
+		return (tmp + 1);
 	}
 }
 

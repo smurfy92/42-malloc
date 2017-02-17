@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:37:35 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/16 17:23:40 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 13:22:45 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void			*find_alloc(void *ptr)
 	return (NULL);
 }
 
-char	*ft_strcpy(char *dst, const char *src, int size,  int size2)
+void			*ft_strcpy(char *dst, const char *src, int size,  int size2)
 {
 	int i;
 
@@ -98,18 +98,35 @@ char	*ft_strcpy(char *dst, const char *src, int size,  int size2)
 void 			*realloc(void *ptr, size_t size)
 {
 	t_node		*ret;
+	t_node		*ret2;
+	t_large		*large;
+	t_large		*large2;
 
 	if (size <= 0)
 		return (NULL);
-	if ((ret = find_alloc(ptr)))
+	if ((ret = find_tiny(ptr)) || (ret = find_small(ptr)))
 	{
 		if (ret->size - sizeof(t_node) >= size)
 			return (ret);
 		else
-			return (ft_strcpy(malloc(size), ret->ptr, ret->size - sizeof(t_node), size));
+		{
+			ret2 = ft_strcpy(malloc(size), ret->ptr, ret->size - sizeof(t_node), size);
+			free(ret);
+			return (ret2);
+		}
 	}
-	else
+	else if ((large = find_large(ptr)))
+	{
+		if (large->size - sizeof(t_large) >= size)
+			return (large);
+		else
+		{
+			large2 = ft_strcpy(malloc(size), (char *)large + sizeof(t_large), large->size, size);
+			free(large);
+			return (large2);
+		}
 		return (NULL);
+	}
 	return (NULL);
 }
 
