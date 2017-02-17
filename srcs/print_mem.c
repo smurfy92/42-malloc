@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 14:54:39 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 18:11:34 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 18:45:52 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_itoa_base(int value, int base)
 	nbr[i + neg] = '\0';
 	while (i-- > 0)
 	{
-		nbr[i + neg] = (value % base) + (value % base > 9 ? 'A' - 10 : '0');
+		nbr[i + neg] = (value % base) + (value % base > 9 ? 'a' - 10 : '0');
 		value = value / base;
 	}
 	if (neg)
@@ -48,9 +48,16 @@ char	*ft_itoa_base(int value, int base)
 	return (nbr);
 }
 
-void				ft_print_addr(void *ptr)
+void				ft_print_addr(void *ptr, int endl)
 {
-	;
+	char *str;
+
+	str = ft_itoa_base((int)ptr, 16);
+	ft_putstr("0x10");
+	if (endl)
+		ft_putendl(str);
+	else
+		ft_putstr(str);
 }
 
 void				ft_print_tiny()
@@ -58,23 +65,18 @@ void				ft_print_tiny()
 	t_node			*nodes;
 	t_block			*block;
 	int				total;
-	char *str;
 
 	block = g_m.tiny;
 	total = 0;
 	while (block)
 	{
-		write(1, "TINY : ", sizeof("TINY : "));
-		str = ft_itoa_base((unsigned int)block, 16);
-		ft_putstr("0x10");
-		ft_putendl(str);
-		free(str);
+		ft_putstr("TINY : ");
+		ft_print_addr((void *)block, 1);
 		nodes = block->nodes;
 		total += sizeof(t_block);
 		while (nodes)
 		{
-			if (nodes->used)
-				printf("%p - %p : %zu octets\n", nodes->ptr, nodes->ptr + nodes->size - sizeof(t_node), nodes->size - sizeof(t_node));
+			printf("%p - %p : %zu octets\n", nodes + 1, nodes + 1 + nodes->size - sizeof(t_node), nodes->size - sizeof(t_node));
 			total += nodes->size;
 			nodes = nodes->next;
 		}

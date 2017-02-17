@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/29 11:49:22 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 18:06:50 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/02/17 18:29:05 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ char				*ft_strdup(const char *s1);
 int					ft_strequ(char const *s1, char const *s2);
 void				ft_striter(char *s, void (*f)(char *));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
-char				*ft_strjoin(char const *s1, char const *s2);
 size_t				ft_strlcat(char *dst,
 					const char *src, size_t size);
 char				*ft_strmap(char const *s, char (*f)(char));
@@ -75,8 +74,6 @@ char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strncat(char *s1,
 					const char *s2, size_t n);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
-char				*ft_strncpy(char *dst,
-					const char *src, size_t n);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 char				*ft_strnew(size_t size);
 char				*ft_strnstr(const char *s1, const char *s2, size_t n);
@@ -86,7 +83,6 @@ char				**ft_spacesplit(char const *s);
 int					check_parentheses(char c);
 char				*ft_strstr(const char *s1, const char *s2);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
-char				*ft_strtrim(char const *s);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 void				ft_lstdelone(t_list **alst, void (*del)(void*, size_t));

@@ -9,7 +9,6 @@ int		main(void)
 	total += 42;
 	char *str2 = malloc(42);
 
-	free(str2);
 	str2 = malloc(1024);
 	realloc(str2, 5);
 	total += 42;
