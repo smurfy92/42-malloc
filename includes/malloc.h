@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:36:42 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 20:21:49 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/03/03 15:42:14 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,16 @@ typedef struct		s_malloc
 }					t_malloc;
 
 t_malloc			g_m;
-pthread_mutex_t lock;
+pthread_mutex_t g_lock;
 
 void				free(void *ptr);
 void				*malloc(size_t size);
-void 				*realloc(void *ptr, size_t size);
+void				*realloc(void *ptr, size_t size);
 void				*find_alloc(t_node *node, size_t size);
 void				show_alloc_mem();
 void				*ft_mystrcpy(char *dst, const char *src, int size,
 int size2);
 void				ft_print_addr(unsigned long long n, int endl);
 void				ft_print_node(t_node *ptr);
-
 
 #endif

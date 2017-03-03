@@ -6,13 +6,13 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/13 14:54:39 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 20:19:10 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/03/03 15:40:39 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/malloc.h"
 
-static	int		ft_print_tiny()
+static	int			ft_print_tiny(void)
 {
 	t_node			*nodes;
 	t_block			*block;
@@ -41,11 +41,11 @@ static	int		ft_print_tiny()
 	return (total);
 }
 
-static	int			ft_print_small()
+static	int			ft_print_small(void)
 {
-	t_node *nodes;
-	t_block *block;
-	int 	total;
+	t_node		*nodes;
+	t_block		*block;
+	int			total;
 
 	total = 0;
 	block = g_m.small;
@@ -59,7 +59,7 @@ static	int			ft_print_small()
 			if (!nodes->last)
 			{
 				ft_print_node(nodes);
-				total += nodes->size - sizeof(t_node);	
+				total += nodes->size - sizeof(t_node);
 			}
 			nodes = nodes->next;
 		}
@@ -70,12 +70,12 @@ static	int			ft_print_small()
 	return (total);
 }
 
-static	int			ft_print_big()
+static	int			ft_print_big(void)
 {
-	t_large *block;
-	block = g_m.large;
-	int total;
+	t_large		*block;
+	int			total;
 
+	block = g_m.large;
 	total = 0;
 	while (block)
 	{
@@ -89,8 +89,7 @@ static	int			ft_print_big()
 	return (total);
 }
 
-
-void				show_alloc_mem()
+void				show_alloc_mem(void)
 {
 	int total;
 

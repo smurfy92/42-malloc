@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/17 17:40:44 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/02/17 18:43:37 by jtranchi         ###   ########.fr       */
+/*   Updated: 2017/03/03 15:42:40 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		*find_alloc(t_node *node, size_t size)
 				node->next->next = NULL;
 				node->size = size + sizeof(t_node);
 			}
-			pthread_mutex_unlock(&lock);
+			pthread_mutex_unlock(&g_lock);
 			return (node->ptr);
 		}
 		node = node->next;
