@@ -82,8 +82,7 @@ static	int			ft_print_big(void)
 		ft_putstr("LARGE : ");
 		ft_print_addr((intmax_t)block, 1);
 		total += block->size;
-		printf("%p - %p : %zu octets\n", (void*)block + sizeof(t_block*),
-		(void*)block + sizeof(t_node*) + block->size, block->size);
+		ft_print_big_node(block);
 		block = block->next;
 	}
 	return (total);

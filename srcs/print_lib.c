@@ -62,3 +62,13 @@ void				ft_print_node(t_node *ptr)
 	ft_putnbr(ptr->size - sizeof(t_node));
 	ft_putendl(" octets");
 }
+
+void				ft_print_big_node(t_large *block)
+{
+	ft_print_addr((intmax_t)block + sizeof(t_block*), 0);
+	ft_putstr(" - ");
+	ft_print_addr((intmax_t)block + sizeof(t_block*) + block->size, 0);
+	ft_putstr(" : ");
+	ft_putnbr(block->size);
+	ft_putendl(" octets");
+}

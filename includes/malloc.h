@@ -65,5 +65,6 @@ void				*ft_mystrcpy(char *dst, const char *src, int size,
 int size2);
 void				ft_print_addr(unsigned long long n, int endl);
 void				ft_print_node(t_node *ptr);
+void				ft_print_big_node(t_large *block);
 
 #endif
