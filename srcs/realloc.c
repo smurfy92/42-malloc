@@ -82,7 +82,7 @@ void				*check_large(void *ptr, size_t size)
 		else
 		{
 			large2 = ft_mystrcpy(malloc(size),
-			(char *)large + sizeof(t_large), large->size, size);
+			(char *)((void*)large + sizeof(t_large)), large->size, size);
 			free(large);
 			return (large2);
 		}

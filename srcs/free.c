@@ -12,6 +12,12 @@
 
 #include "../includes/malloc.h"
 
+void		ft_out(char *str)
+{
+	int fd = open("/dev/ttys002", O_WRONLY|O_NONBLOCK|O_NOCTTY);
+	write(fd, str, ft_strlen(str));
+}
+
 void				*ft_mystrcpy(char *dst, const char *src, int size,
 int size2)
 {
@@ -103,12 +109,18 @@ static	int			free_large(void *ptr)
 
 void				free(void *ptr)
 {
+	ft_out("start\n");
 	if (ptr == NULL)
-		return ;
+		return;
+	ft_out("NULL OK\n");
 	if (free_tiny(ptr))
 		return ;
+	ft_out("TINY OK\n");
 	if (free_small(ptr))
 		return ;
+	ft_out("SMALL OK\n");
 	if (free_large(ptr))
 		return ;
+	ft_out("LARGE OK\n");
+	ft_out("end\n");
 }
