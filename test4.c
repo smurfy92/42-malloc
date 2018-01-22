@@ -19,13 +19,9 @@ int main()
 {
   char *addr;
 
-  print("Bonjours\n");
   addr = malloc(16);
-  ft_out("Free null\n");
   free(NULL);
-  ft_out("Free bad address\n");
   free((void *)addr + 5);
-  ft_out("Free good\n");
   if (realloc((void *)addr + 5, 10) == NULL)
-    print("Bonjours\n");
+  print("Bonjours\n");
 }

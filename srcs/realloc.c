@@ -78,13 +78,13 @@ void				*check_large(void *ptr, size_t size)
 	if ((large = find_large(ptr)))
 	{
 		if (large->size - sizeof(t_large) >= size)
-			return (large);
+			return ((void *)large);
 		else
 		{
 			large2 = ft_mystrcpy(malloc(size),
 			(char *)((void*)large + sizeof(t_large)), large->size, size);
 			free(large);
-			return (large2);
+			return ((void *)large2);
 		}
 	}
 	return (NULL);
@@ -95,6 +95,8 @@ void				*realloc(void *ptr, size_t size)
 	t_node		*ret;
 	t_node		*ret2;
 
+	if (!ptr)
+		return (malloc(size));
 	if (size <= 0)
 		return (NULL);
 	if ((ret = (!find_tiny(ptr) ? find_small(ptr) : 0)))
@@ -104,7 +106,7 @@ void				*realloc(void *ptr, size_t size)
 		else
 		{
 			ret2 = ft_mystrcpy(malloc(size),
-			ret->ptr, ret->size - sizeof(t_node), size);
+			(char *)ret->ptr, ret->size - sizeof(t_node), size);
 			free(ret);
 			return (ret2);
 		}
