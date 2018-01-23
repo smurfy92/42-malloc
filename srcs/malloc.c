@@ -111,7 +111,6 @@ static	void		*small_malloc(size_t size)
 void				*malloc(size_t size)
 {
 	static int		flag = 0;
-	void *ret;
 
 	if (size <= 0)
 		return (NULL);
@@ -128,11 +127,10 @@ void				*malloc(size_t size)
 		flag = 1;
 	}
 	pthread_mutex_lock(&g_lock);
-	if (size <= (size_t)TINY)
-		ret = tiny_malloc(size);
-	else if (size <= (size_t)PAGE)
-		ret = small_malloc(size);
+	if (size < (size_t)TINY)
+		return (tiny_malloc(size));
+	else if (size < (size_t)PAGE)
+		return (small_malloc(size));
 	else
-		ret = large_malloc(size);
-	return ret;
+		return (large_malloc(size));
 }
