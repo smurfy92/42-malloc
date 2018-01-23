@@ -28,7 +28,6 @@ $(NAME): $(OBJ)
 	@echo "\033[K$(CY)[MALLOC] :$(CE) $(CG)Compiling Malloc ...$(CE)";
 	-@make -C srcs/libft nohd
 	@gcc -shared -o $(NAME)_$(HOSTTYPE) $(FLAG) $(INC) $(SRC) $(LIB);
-	@gcc -shared  -o $(NAME)_$(HOSTTYPE) $(FLAG) $(INC) $(SRC) $(LIB);
 	@ln -sf $(NAME)_$(HOSTTYPE) "libft_malloc.so"
 
 %.o: %.c
