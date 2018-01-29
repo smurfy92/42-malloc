@@ -6,7 +6,7 @@
 /*   By: jtranchi <jtranchi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/17 19:40:32 by jtranchi          #+#    #+#             */
-/*   Updated: 2017/03/03 15:41:59 by jtranchi         ###   ########.fr       */
+/*   Updated: 2018/01/29 13:02:32 by jtranchi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ static	void		*large_malloc(size_t size)
 		g_m.large->next = NULL;
 		g_m.large->prev = NULL;
 		g_m.large->size = size;
-		pthread_mutex_unlock(&g_lock);
 		return (g_m.large + 1);
 	}
 	else
@@ -53,7 +52,6 @@ static	void		*large_malloc(size_t size)
 		tmp->next->prev = tmp;
 		tmp->next->next = NULL;
 		tmp->next->size = size;
-		pthread_mutex_unlock(&g_lock);
 		return (tmp->next + 1);
 	}
 }
@@ -116,17 +114,11 @@ void				*malloc(size_t size)
 		return (NULL);
 	if (flag == 0)
 	{
-		if (pthread_mutex_init(&g_lock, NULL) != 0)
-		{
-			write(2, "mutex init failed\n", sizeof("mutex init failed\n"));
-			return (NULL);
-		}
 		g_m.tiny = NULL;
 		g_m.small = NULL;
 		g_m.large = NULL;
 		flag = 1;
 	}
-	pthread_mutex_lock(&g_lock);
 	if (size < (size_t)TINY)
 		return (tiny_malloc(size));
 	else if (size < (size_t)PAGE)
