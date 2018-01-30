@@ -52,7 +52,7 @@ clean: start
 
 fclean: start clean
 	@echo "\033[K$(CY)[MALLOC] :$(CE) $(CG)Cleaning 42sh ...$(CE)\033[1A";
-	@/bin/rm -f $(NAME)_$(HOSTTYPE) "libft_malloc.so";
+	@/bin/rm -f $(NAME)_$(HOSTTYPE).so "libft_malloc.so";
 	-@make -C srcs/libft nohdfclean;
 
 re: fclean all
